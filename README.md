@@ -4,6 +4,22 @@
 
 This project aims to develop a **Daily Habit Tracker** app with cross-platform compatibility, focusing on **real-life app development** practices. The app will be developed across five weekends, covering the backend and four mobile platforms (Android, iOS, React Native, and Flutter). The project will use **TypeScript** for the backend and focus on learning key concepts in mobile development, state management, GraphQL, and API integration.
 
+This repository is designed not only to help me deepen my knowledge of various mobile technologies but also to guide and support the community on their own development journeys. This project serves as a practical learning tool and a shared resource for anyone interested in mobile development.
+
+### **Learning Objectives**
+
+- **Explore Multiple Technologies**: Gain hands-on experience with Android development using Kotlin, iOS development with Swift, and cross-platform solutions with React Native and Flutter.
+- **Backend Integration**: Learn to build and interact with a Node.js backend, utilizing GraphQL for efficient data management.
+- **Mobile-First Design**: Implement mobile-first design principles to ensure a seamless user experience across all devices.
+
+### **Community Impact**
+
+- **Share Knowledge**: Document and share my learning process to provide valuable insights and practical advice to others exploring similar technologies.
+- **Provide Resources**: Offer guidance and resources through this repository to help the community understand key concepts and overcome common challenges in mobile development.
+- **Foster Collaboration**: Encourage contributions and discussions to enhance collective learning and improvement of the project.
+
+By working on this project, you’ll not only advance your own skills but also have access to a growing repository of knowledge that can benefit other developers. Feel free to explore, contribute, and join the journey of mastering mobile development technologies!
+
 ## **Project Goals**
 
 - Develop a functional Daily Habit Tracker app.
