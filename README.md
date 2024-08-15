@@ -52,6 +52,7 @@ The project will be organized in a single GitHub repository with the following s
 ## Documentation
 
 - [UX Plan](docs/UXPlan.md): Detailed UX requirements and design considerations for the app.
+- [Contribution Guide](docs/ContributionGuide.md): Guidelines for contributing to the project.
 
 ## **Development Timeline**
 
