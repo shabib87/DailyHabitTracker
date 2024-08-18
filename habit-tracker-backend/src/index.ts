@@ -1,12 +1,13 @@
-import express from 'express';
+import { initializeDatabase } from './bootstrap/database';
+import { startServer } from './bootstrap/server';
 
-const app = express();
-const port = 3000;
+async function startApplication() {
+  try {
+    await initializeDatabase();
+    startServer();
+  } catch (error) {
+    console.error('Failed to start application', error);
+  }
+}
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+startApplication();
