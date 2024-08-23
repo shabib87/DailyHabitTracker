@@ -1,4 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Tracker } from './Tracker';
 import { User } from './User';
 
 @Entity()
@@ -14,4 +15,7 @@ export class Habit {
 
   @ManyToOne(() => User, (user) => user.habits)
   user!: User;
+
+  @OneToMany(() => Tracker, tracker => tracker.habit)
+  trackers!: Tracker[];
 }
