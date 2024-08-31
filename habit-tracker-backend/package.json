@@ -4,6 +4,7 @@
   "description": "Node and TypeScript Backend for Habit tracker with GraphQL",
   "main": "dist/index.js",
   "scripts": {
+    "preinstall": "export NVM_DIR=\"$HOME/.nvm\" && [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && nvm use",
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
@@ -19,6 +20,9 @@
     "migration:run": "npx typeorm-ts-node-commonjs migration:run -d src/config/typeorm.config.ts",
     "migration:revert": "npx typeorm-ts-node-commonjs migration:revert -d src/config/typeorm.config.ts",
     "check-node-version": "check-node-version --node $(cat .nvmrc)"
+  },
+  "engines": {
+    "node": ">=18.0.0 <19.0.0"
   },
   "keywords": [
     "node",
