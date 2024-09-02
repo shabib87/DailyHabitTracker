@@ -1,9 +1,9 @@
 import { Response } from 'express';
-import { UserDTO } from '../dto/user.dto';
-import { userRepository } from '../repositories/userRepository';
+import { HabitDTO } from '../dto/habit.dto';
+import { habitRepository } from '../repositories/habitRepository';
 import { APIRequest } from '../utils/APIRequest';
 
-interface UserController {
+interface HabitController {
   findAll: (req: APIRequest, res: Response) => void;
   create: (req: APIRequest, res: Response) => void;
   findOne: (req: APIRequest, res: Response) => void;
@@ -11,14 +11,23 @@ interface UserController {
   delete: (req: APIRequest, res: Response) => void;
 }
 
-export const userController: UserController = {
+export const habitController: HabitController = {
   async findAll(req: APIRequest, res: Response) {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
+    const currentUser = req.currentUser;
+
+    if (!currentUser || typeof currentUser !== 'string') {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
 
     try {
-      const users = await userRepository.findAllUsers(page, limit);
-      res.json(users);
+      const habits = await habitRepository.findAllHabits(
+        currentUser,
+        page,
+        limit,
+      );
+      res.json(habits);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -26,11 +35,11 @@ export const userController: UserController = {
   },
 
   async create(req: APIRequest, res: Response) {
-    const userDTO: UserDTO = req.body;
+    const habitDTO: HabitDTO = req.body;
 
     try {
-      const newUser = await userRepository.createUser(userDTO);
-      res.status(201).json(newUser);
+      const newHabit = await habitRepository.createHabit(habitDTO);
+      res.status(201).json(newHabit);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -38,14 +47,14 @@ export const userController: UserController = {
   },
 
   async findOne(req: APIRequest, res: Response) {
-    const userId = req.params.id;
+    const habitId = req.params.id;
 
     try {
-      const user = await userRepository.findUserById(userId);
-      if (user) {
-        res.json(user);
+      const habit = await habitRepository.findHabitById(habitId);
+      if (habit) {
+        res.json(habit);
       } else {
-        res.status(404).json({ error: 'User not found' });
+        res.status(404).json({ error: 'Habit not found' });
       }
     } catch (error) {
       console.error(error);
@@ -54,15 +63,15 @@ export const userController: UserController = {
   },
 
   async update(req: APIRequest, res: Response) {
-    const userId = req.params.id;
-    const userDTO: UserDTO = req.body;
+    const habitId = req.params.id;
+    const habitDTO: HabitDTO = req.body;
 
     try {
-      const updatedUser = await userRepository.updateUser(userId, userDTO);
-      if (updatedUser) {
-        res.json(updatedUser);
+      const updatedHabit = await habitRepository.updateHabit(habitId, habitDTO);
+      if (updatedHabit) {
+        res.json(updatedHabit);
       } else {
-        res.status(404).json({ error: 'User not found' });
+        res.status(404).json({ error: 'Habit not found' });
       }
     } catch (error) {
       console.error(error);
@@ -71,14 +80,14 @@ export const userController: UserController = {
   },
 
   async delete(req: APIRequest, res: Response) {
-    const userId = req.params.id;
+    const habitId = req.params.id;
 
     try {
-      const deleted = await userRepository.deleteUser(userId);
+      const deleted = await habitRepository.deleteHabit(habitId);
       if (deleted) {
         res.status(204).send();
       } else {
-        res.status(404).json({ error: 'User not found' });
+        res.status(404).json({ error: 'Habit not found' });
       }
     } catch (error) {
       console.error(error);
