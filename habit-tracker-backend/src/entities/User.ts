@@ -1,6 +1,7 @@
+// Manages user information.
+
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Habit } from './Habit';
-import { Tracker } from './Tracker';
 
 @Entity()
 export class User {
@@ -18,7 +19,4 @@ export class User {
 
   @OneToMany(() => Habit, (habit) => habit.user)
   habits!: Habit[];
-
-  @OneToMany(() => Tracker, tracker => tracker.user)
-  trackers!: Tracker[];
 }

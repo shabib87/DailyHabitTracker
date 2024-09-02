@@ -1,6 +1,9 @@
+// Manages the habits associated with each user.
+
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Tracker } from './Tracker';
 import { User } from './User';
+import { Reminder } from './Reminder';
 
 @Entity()
 export class Habit {
@@ -18,4 +21,7 @@ export class Habit {
 
   @OneToMany(() => Tracker, tracker => tracker.habit)
   trackers!: Tracker[];
+
+  @OneToMany(() => Reminder, reminder => reminder.habit)
+  reminders!: Reminder[];
 }
