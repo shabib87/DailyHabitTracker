@@ -5,8 +5,8 @@ import { Habit } from './Habit';
 
 @Entity()
 export class Tracker {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column({ type: 'datetime' })
   date!: Date;
@@ -14,6 +14,6 @@ export class Tracker {
   @Column()
   status!: boolean;
 
-  @ManyToOne(() => Habit, habit => habit.trackers)
+  @ManyToOne(() => Habit, (habit) => habit.trackers)
   habit!: Habit;
 }

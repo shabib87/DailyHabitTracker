@@ -1,12 +1,19 @@
 // Manages reminders for habit tracking.
 
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from 'typeorm';
 import { Habit } from './Habit';
 
 @Entity()
 export class Reminder {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @ManyToOne(() => Habit, (habit) => habit.reminders)
   @JoinColumn({ name: 'habitId' })

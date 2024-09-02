@@ -5,8 +5,8 @@ import { Habit } from './Habit';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column({ unique: true })
   username!: string;
