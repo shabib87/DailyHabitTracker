@@ -1,17 +1,17 @@
 import { Router } from 'express';
-import { userController } from '../controllers/userController';
+import { userController } from '../controllers/user/userController';
 import { isAuthenticated } from '../middlewares/auth.middleware';
 
 export const userRouter = Router();
 
-// Get all users with pagination
-userRouter.get('/users', isAuthenticated, userController.findAll);
+// Create a new user (signup)
+userRouter.post('/signup', userController.create);
 
-// Create a new user
-userRouter.post('/users', userController.create);
+// Get all users with pagination
+userRouter.get('/users', isAuthenticated, userController.readAll);
 
 // Get a single user by ID
-userRouter.get('/users/:id', isAuthenticated, userController.findOne);
+userRouter.get('/users/:id', isAuthenticated, userController.readOne);
 
 // Update a user by ID
 userRouter.put('/users/:id', isAuthenticated, userController.update);

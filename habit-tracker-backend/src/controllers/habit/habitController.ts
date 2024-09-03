@@ -1,39 +1,17 @@
 import { Response } from 'express';
-import { HabitDTO } from '../dto/habit.dto';
-import { habitRepository } from '../repositories/habitRepository';
-import { APIRequest } from '../utils/APIRequest';
+import { HabitDTO } from '../../dto/habit.dto';
+import { habitRepository } from '../../repositories/habitRepository';
+import { APIRequest } from '../../utils/APIRequest';
 
 interface HabitController {
-  findAll: (req: APIRequest, res: Response) => void;
   create: (req: APIRequest, res: Response) => void;
-  findOne: (req: APIRequest, res: Response) => void;
+  readAll: (req: APIRequest, res: Response) => void;
+  readOne: (req: APIRequest, res: Response) => void;
   update: (req: APIRequest, res: Response) => void;
   delete: (req: APIRequest, res: Response) => void;
 }
 
 export const habitController: HabitController = {
-  async findAll(req: APIRequest, res: Response) {
-    const page = parseInt(req.query.page as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 10;
-    const currentUser = req.currentUser;
-
-    if (!currentUser || typeof currentUser !== 'string') {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    try {
-      const habits = await habitRepository.findAllHabits(
-        currentUser,
-        page,
-        limit,
-      );
-      res.json(habits);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  },
-
   async create(req: APIRequest, res: Response) {
     const habitDTO: HabitDTO = req.body;
 
@@ -45,12 +23,32 @@ export const habitController: HabitController = {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   },
+  async readAll(req: APIRequest, res: Response) {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const currentUser = req.currentUser;
 
-  async findOne(req: APIRequest, res: Response) {
+    if (!currentUser || typeof currentUser !== 'string') {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+      const habits = await habitRepository.readAllHabits(
+        currentUser,
+        page,
+        limit,
+      );
+      res.json(habits);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
+  async readOne(req: APIRequest, res: Response) {
     const habitId = req.params.id;
 
     try {
-      const habit = await habitRepository.findHabitById(habitId);
+      const habit = await habitRepository.readHabitById(habitId);
       if (habit) {
         res.json(habit);
       } else {
@@ -61,7 +59,6 @@ export const habitController: HabitController = {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   },
-
   async update(req: APIRequest, res: Response) {
     const habitId = req.params.id;
     const habitDTO: HabitDTO = req.body;
@@ -78,7 +75,6 @@ export const habitController: HabitController = {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   },
-
   async delete(req: APIRequest, res: Response) {
     const habitId = req.params.id;
 
