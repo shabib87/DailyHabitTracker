@@ -59,7 +59,7 @@ The project will be organized in a single GitHub repository with the following s
 ### **Weekend 1: Backend Development**
 
 - **Setup**: Initialize Node.js with TypeScript, set up project structure.
-- **Database**: Design PostgreSQL schema for Users, Habits, and Trackers.
+- **Database**: Design SQLite schema for Users, Habits, and Trackers.
 - **GraphQL**: Define and implement GraphQL schema and resolvers.
 - **Authentication**: Implement JWT-based authentication.
 - **Testing**: Write unit tests for API endpoints.

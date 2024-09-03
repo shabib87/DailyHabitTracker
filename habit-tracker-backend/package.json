@@ -1,0 +1,66 @@
+{
+  "name": "habit-tracker-backend",
+  "version": "1.0.0",
+  "description": "Node and TypeScript Backend for Habit tracker with GraphQL",
+  "main": "dist/index.js",
+  "scripts": {
+    "preinstall": "export NVM_DIR=\"$HOME/.nvm\" && [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && nvm use",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:dev": "concurrently \"npm run server\" \"npm run watch\"",
+    "server": "ts-node src/index.ts",
+    "watch": "tsc -w",
+    "lint": "eslint 'src/**/*.{js,ts}'",
+    "format": "prettier --write 'src/**/*.{js,ts,json,md}'",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "schema:sync": "npx typeorm-ts-node-commonjs schema:sync",
+    "typeorm:cache": "npx typeorm-ts-node-commonjs cache:clear",
+    "schema:drop": "npx typeorm-ts-node-commonjs -d src/config/typeorm.config.ts",
+    "migration:create": "typeorm migration:create ./src/migrations/schema-update",
+    "migration:generate": "npx typeorm-ts-node-commonjs migration:generate ./src/migrations/schema-update -d src/config/typeorm.config.ts",
+    "migration:run": "npx typeorm-ts-node-commonjs migration:run -d src/config/typeorm.config.ts",
+    "migration:revert": "npx typeorm-ts-node-commonjs migration:revert -d src/config/typeorm.config.ts",
+    "check-node-version": "check-node-version --node $(cat .nvmrc)"
+  },
+  "engines": {
+    "node": ">=18.0.0 <19.0.0"
+  },
+  "keywords": [
+    "node",
+    "typescript",
+    "apollo",
+    "graphql",
+    "sqlite3"
+  ],
+  "author": "https://github.com/shabib87",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^22.3.0",
+    "check-node-version": "^4.2.1",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.1.0"
+  },
+  "dependencies": {
+    "@types/joi": "^17.2.3",
+    "apollo-server-express": "^3.13.0",
+    "bcrypt": "^5.1.1",
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "graphql": "^16.9.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "memory-cache": "^0.2.0",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.20"
+  }
+}
