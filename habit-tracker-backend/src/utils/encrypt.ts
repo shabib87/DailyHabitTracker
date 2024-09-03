@@ -23,7 +23,13 @@ export const encrypt = {
     return bcrypt.compare(password, hashPassword);
   },
 
-  generateToken(payload: JWTPayloadDTO): string {
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' });
+  generateToken(payload: JWTPayloadDTO): {
+    token: string;
+    expiresAt: number | undefined;
+  } {
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' });
+    const decodedToken = jwt.decode(token) as jwt.JwtPayload;
+    const expiresAt = decodedToken.exp;
+    return { token, expiresAt };
   },
 };

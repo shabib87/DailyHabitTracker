@@ -4,6 +4,9 @@ import { isAuthenticated } from '../middlewares/auth.middleware';
 
 export const userRouter = Router();
 
+// Login user
+userRouter.post('/login', userController.login);
+
 // Create a new user (signup)
 userRouter.post('/signup', userController.create);
 

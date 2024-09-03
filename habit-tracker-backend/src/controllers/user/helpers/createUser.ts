@@ -33,7 +33,7 @@ export async function createUser(req: APIRequest, res: Response) {
 
     // Generate JWT token
     const payload: JWTPayloadDTO = { id: newUser.id };
-    const token = encrypt.generateToken(payload);
+    const { token, expiresAt } = encrypt.generateToken(payload);
 
     return res.status(201).json({
       message: 'User created successfully',
@@ -42,7 +42,10 @@ export async function createUser(req: APIRequest, res: Response) {
         username: newUser.username,
         email: newUser.email,
       },
-      token,
+      jwt: {
+        token,
+        expiresAt,
+      },
     });
   } catch (error) {
     console.error('Signup error:', error);
