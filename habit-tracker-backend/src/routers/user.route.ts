@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { userController } from '../controllers/user/userController';
-import { isAuthenticated } from '../middlewares/auth.middleware';
+import { verifyAuthToken } from '../middlewares/auth.middleware';
 
 export const userRouter = Router();
 
@@ -11,13 +11,13 @@ userRouter.post('/login', userController.login);
 userRouter.post('/signup', userController.create);
 
 // Get all users with pagination
-userRouter.get('/users', isAuthenticated, userController.readAll);
+userRouter.get('/users', verifyAuthToken, userController.readAll);
 
 // Get a single user by ID
-userRouter.get('/users/:id', isAuthenticated, userController.readOne);
+userRouter.get('/users/:id', verifyAuthToken, userController.readOne);
 
 // Update a user by ID
-userRouter.put('/users/:id', isAuthenticated, userController.update);
+userRouter.put('/users/:id', verifyAuthToken, userController.update);
 
 // Delete a user by ID
-userRouter.delete('/users/:id', isAuthenticated, userController.delete);
+userRouter.delete('/users/:id', verifyAuthToken, userController.delete);

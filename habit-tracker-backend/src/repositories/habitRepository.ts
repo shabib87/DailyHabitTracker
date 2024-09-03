@@ -10,9 +10,13 @@ interface HabitRepository {
     page: number,
     limit: number,
   ) => Promise<Habit[]>;
-  readHabitById: (id: string) => Promise<Habit | null>;
-  updateHabit: (id: string, habitDTO: HabitDTO) => Promise<Habit | null>;
-  deleteHabit: (id: string) => Promise<boolean>;
+  readHabitById: (userId: string, id: string) => Promise<Habit | null>;
+  updateHabit: (
+    userId: string,
+    id: string,
+    habitDTO: HabitDTO,
+  ) => Promise<Habit | null>;
+  deleteHabit: (userId: string, id: string) => Promise<boolean>;
 }
 
 const repository: Repository<Habit> = dataSource.getRepository(Habit);
@@ -34,19 +38,30 @@ export const habitRepository: HabitRepository = {
       take: limit,
     });
   },
-  async readHabitById(id: string): Promise<Habit | null> {
-    return repository.findOneBy({ id });
+  async readHabitById(userId: string, id: string): Promise<Habit | null> {
+    return repository.findOne({
+      where: { id, user: { id: userId } },
+    });
   },
-  async updateHabit(id: string, habitDTO: HabitDTO): Promise<Habit | null> {
-    const habit = await repository.findOneBy({ id });
+  async updateHabit(
+    userId: string,
+    id: string,
+    habitDTO: HabitDTO,
+  ): Promise<Habit | null> {
+    const habit = await repository.findOne({
+      where: { id, user: { id: userId } },
+    });
     if (!habit) {
       return null;
     }
     repository.merge(habit, habitDTO);
     return repository.save(habit);
   },
-  async deleteHabit(id: string): Promise<boolean> {
-    const result = await repository.delete(id);
+  async deleteHabit(userId: string, id: string): Promise<boolean> {
+    const result = await repository.delete({
+      id,
+      user: { id: userId },
+    });
     return result.affected !== 0;
   },
 };

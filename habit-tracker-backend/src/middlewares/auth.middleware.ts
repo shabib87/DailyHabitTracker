@@ -4,7 +4,7 @@ import { APIRequest } from '../utils/APIRequest';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 
-export const isAuthenticated = async (
+export const verifyAuthToken = async (
   req: APIRequest,
   res: Response,
   next: NextFunction,
